@@ -7,14 +7,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:permisos": "node supabase/tests/permisos.test.mjs"
+    "test:permisos": "node supabase/tests/permisos.test.mjs",
+    "test:operativo": "node supabase/tests/operativo.test.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.118.0",
+    "exceljs": "^4.4.0",
     "next": "16.4.3",
     "react": "19.3.0",
     "react-dom": "19.3.0",
+    "read-excel-file": "^9.3.14",
     "server-only": "^0.0.1",
     "zod": "^4.6.7"
   },

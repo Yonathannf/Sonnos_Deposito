@@ -22,12 +22,12 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="min-h-screen md:flex">
-      <aside className="hidden w-64 shrink-0 border-r border-slate-200 bg-white p-4 md:block">
+      <aside className="hidden w-64 shrink-0 border-r border-slate-200 bg-white p-4 md:block print:hidden">
         <div className="mb-4 px-3 text-lg font-bold">Sonnos Depósito</div>
         {menu}
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex items-center justify-between gap-3 border-b border-slate-200 bg-white px-4 py-3">
+        <header className="flex items-center justify-between gap-3 border-b border-slate-200 bg-white px-4 py-3 print:hidden">
           <details className="relative md:hidden">
             <summary className="flex h-11 cursor-pointer list-none items-center rounded-lg border border-slate-300 px-4 font-medium">Menú</summary>
             <div className="absolute left-0 top-12 z-20 w-64 rounded-xl bg-white p-3 shadow-xl ring-1 ring-slate-200">{menu}</div>

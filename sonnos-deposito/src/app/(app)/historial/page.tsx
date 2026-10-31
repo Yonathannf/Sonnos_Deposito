@@ -24,10 +24,24 @@ export default async function HistorialPage({
   if (entidad) query = query.eq("entidad", entidad);
   if (q) query = query.ilike("usuario_nombre", `%${q.replace(/[%,]/g, "")}%`);
   const { data: filas } = await query;
+  const { data: controles } = await supabase.rpc("verificar_consistencia");
+  const mal = (controles ?? []).filter((c: { ok: boolean }) => !c.ok).length;
 
   return (
     <div className="mx-auto max-w-6xl space-y-4">
       <h1 className="text-2xl font-bold">Historial de cambios</h1>
+      {controles && (
+        <details className={`rounded-xl p-4 ring-1 ${mal ? "bg-red-50 ring-red-300" : "bg-green-50 ring-green-200"}`} open={mal > 0}>
+          <summary className="cursor-pointer font-semibold">
+            {mal ? `⚠ Control de consistencia: ${mal} problema(s) entre módulos` : `✔ Control de consistencia: ${controles.length} controles entre pedidos, stock, insumos e inventario sin problemas`}
+          </summary>
+          <ul className="mt-2 space-y-1 text-sm">
+            {controles.map((c: { chequeo: string; ok: boolean; cantidad: number; detalle: string }) => (
+              <li key={c.chequeo}>{c.ok ? "✔" : "✖"} {c.chequeo}{c.cantidad ? <span className="text-slate-600"> — {c.cantidad}: {c.detalle}</span> : null}</li>
+            ))}
+          </ul>
+        </details>
+      )}
       <form className="flex flex-wrap gap-2">
         <input name="entidad" defaultValue={entidad} placeholder="Entidad (ej. perfiles)" className="h-11 rounded-lg border border-slate-300 px-3" />
         <input name="q" defaultValue={q} placeholder="Usuario" className="h-11 rounded-lg border border-slate-300 px-3" />
